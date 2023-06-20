@@ -1,0 +1,16 @@
+top_stories,http://feeds.bbci.co.uk/news/rss.xml?edition=int
+world,http://feeds.bbci.co.uk/news/world/rss.xml
+africa,http://feeds.bbci.co.uk/news/world/africa/rss.xml
+asia,http://feeds.bbci.co.uk/news/world/asia/rss.xml
+europe,http://feeds.bbci.co.uk/news/world/europe/rss.xml
+latin_america,http://feeds.bbci.co.uk/news/world/latin_america/rss.xml
+middle_east,http://feeds.bbci.co.uk/news/world/middle_east/rss.xml
+north_america,http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml
+uk,http://feeds.bbci.co.uk/news/uk/rss.xml
+business,http://feeds.bbci.co.uk/news/business/rss.xml
+politics,http://feeds.bbci.co.uk/news/politics/rss.xml
+health,http://feeds.bbci.co.uk/news/health/rss.xml
+education,http://feeds.bbci.co.uk/news/education/rss.xml
+science_environment,http://feeds.bbci.co.uk/news/science_and_environment/rss.xml
+technology,http://feeds.bbci.co.uk/news/technology/rss.xml
+entertainment_arts,http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml
