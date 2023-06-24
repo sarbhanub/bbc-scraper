@@ -9,6 +9,33 @@ This repository contains a scraper built with Python and integrated with GitHub 
 - Utilizes GitHub Actions for automation and scheduling.
 - Saves scraped data to a MongoAtlas cluster. Additionally, saves polarity/sentiment of each article fetched as well.
 
+## Project Structure
+
+The basic project structure is as follows:
+```bash
+root\
+  ├─ .github\
+  │  └─ workflows\
+  │     └─ actions.yml
+  ├─ .gitignore
+  ├─ feeds\
+  │  └─ rss.csv
+  ├─ resources\
+  │  └─ nltk_data\
+  │     └─ sentiment\
+  │        ├─ vader_lexicon.xml
+  │        └─ vader_lexicon.zip
+  ├─ src\
+  │  ├─ getcontent.py
+  │  ├─ getsentiment.py
+  │  ├─ loader.py
+  │  ├─ mongoconnect.py
+  │  └─ scraper.py
+  ├─ main.py
+  ├─ requirements.txt
+  ├─ README.md
+  └─ LICENSE
+```
 ## Prerequisites
 
 To run the BBC Scraper locally, you need to have the following prerequisites installed:
