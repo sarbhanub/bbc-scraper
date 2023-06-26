@@ -4,7 +4,7 @@ This repository contains a scraper built with Python and integrated with GitHub 
 
 ## Features
 
-- Fetches 16 public RSS feeds from BBC. (feeds/feeds.csv)
+- Fetches 16 public RSS feeds from BBC. (feeds/rss.csv)
 - Runs the scraper 8 times a day to keep the news articles up to date.
 - Utilizes GitHub Actions for automation and scheduling.
 - Saves scraped data to a MongoAtlas cluster. Additionally, saves polarity/sentiment of each article fetched as well.
