@@ -21,6 +21,7 @@ def load_data(feeds, news_col, sent_col):
     with open(feeds, "r") as file:
         lines = file.readlines()
 
+    seen_ids = set()
     bulk_articles = []
     bulk_scores = []
 
@@ -30,24 +31,30 @@ def load_data(feeds, news_col, sent_col):
         
         if articles:
             for article in articles:
-                if article["content"] != "":
-                    score = get_sentiment(article["content"])
-                elif article["description"] != "":
-                    score = get_sentiment(article["description"])
-                else:
-                    score = get_sentiment(article["title"])
-
-                score_data = {
-                    "_id": article["_id"],
-                    "date_id": article["date_id"],
-                    "neg": score["neg"],
-                    "neu": score["neu"],
-                    "pos": score["pos"],
-                    "compound": score["compound"]
-                }
+                if article["_id"] in seen_ids:
+                    continue
                 
-                bulk_scores.append(score_data)
-                bulk_articles.append(article)
+                else:
+                    seen_ids.add(article["_id"])
+                    
+                    if article["content"] != "":
+                        score = get_sentiment(article["content"])
+                    elif article["description"] != "":
+                        score = get_sentiment(article["description"])
+                    else:
+                        score = get_sentiment(article["title"])
+
+                    score_data = {
+                        "_id": article["_id"],
+                        "date_id": article["date_id"],
+                        "neg": score["neg"],
+                        "neu": score["neu"],
+                        "pos": score["pos"],
+                        "compound": score["compound"]
+                    }
+                    
+                    bulk_articles.append(article)
+                    bulk_scores.append(score_data)
 
             if bulk_articles and bulk_scores:
                 news_col.insert_many(bulk_articles)
