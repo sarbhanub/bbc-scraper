@@ -38,39 +38,48 @@ def scrape_feed(tag, rss_url, news_col):
 
     for item in tree.findall(".//item"):
         guid = item.find("guid").text
+        pattern = r'(\d+)'
+        match = re.search(pattern, guid)
         try:
-            _id = int(guid[-8:])
-            existing = news_col.find_one({"_id": _id})
+            if match:
+                id = match.group(0)
+                if len(id) == 8:
+                    _id = int(id)
+                    existing = news_col.find_one({"_id": _id})
 
-            if existing:
-                if tag not in existing["tags"]:
-                    existing_tags = existing["tags"]
-                    modified_tags = existing_tags + ", " + tag
-                    news_col.update_one({"_id": _id}, {"$set": {"tags": modified_tags}})
+                    if existing:
+                        if tag not in existing["tags"]:
+                            existing_tags = existing["tags"]
+                            modified_tags = existing_tags + ", " + tag
+                            news_col.update_one({"_id": _id}, {"$set": {"tags": modified_tags}})
 
+                    else:
+                        title = item.find("title").text
+                        date_published = datetime.datetime.strptime(item.find("pubDate").text, bbc_format)
+                        date_id = int(datetime.datetime.strftime(date_published, id_format)) # id format
+                        description_element = item.find("description")
+                        description = description_element.text if description_element is not None else ""
+                        raw_content, image_url = get_content(guid)
+                        content = clean_text(raw_content) if raw_content is not None else ""
+                        scraped_on = datetime.datetime.utcnow()
+
+                        articles.append({
+                            "_id": _id,
+                            "date_id": date_id,
+                            "title": title,
+                            "date_published": date_published,
+                            "description": description,
+                            "content": content,
+                            "tags": tag,
+                            "guid": guid,
+                            "image_url": image_url,
+                            "scraped_on": scraped_on
+                        })
+                else:
+                    pass
             else:
-                title = item.find("title").text
-                date_published = datetime.datetime.strptime(item.find("pubDate").text, bbc_format) 
-                date_id = int(datetime.datetime.strftime(date_published, id_format))  # id format
-                description_element = item.find("description")
-                description = description_element.text if description_element is not None else ""
-                raw_content, image_url = get_content(guid)
-                content = clean_text(raw_content) if raw_content is not None else ""
-                scraped_on = datetime.datetime.utcnow()
+                pass
 
-                articles.append({
-                    "_id": _id,
-                    "date_id": date_id,
-                    "title": title,
-                    "date_published": date_published,
-                    "description": description,
-                    "content": content,
-                    "tags": tag,
-                    "guid": guid,
-                    "image_url": image_url,
-                    "scraped_on": scraped_on
-                })
-    
         except ValueError:
             continue
 
