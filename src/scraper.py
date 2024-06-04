@@ -42,7 +42,7 @@ def scrape_feed(tag, rss_url, news_col):
         match = re.search(pattern, guid)
         try:
             if match:
-                id = match.group(0)
+                id = str(match.group(0))
                 if len(id) == 8:
                     _id = int(id)
                     existing = news_col.find_one({"_id": _id})
