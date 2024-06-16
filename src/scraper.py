@@ -38,13 +38,13 @@ def scrape_feed(tag, rss_url, news_col):
 
     for item in tree.findall(".//item"):
         guid = item.find("guid").text
-        pattern = r'(\d+)'
+        pattern =  r'.*/([^/]+)(?=#|$)'
         match = re.search(pattern, guid)
         try:
             if match:
-                id = str(match.group(0))
-                if len(id) == 8:
-                    _id = int(id)
+                id = str(match.group(1))
+                if len(id) < 18:
+                    _id = id
                     existing = news_col.find_one({"_id": _id})
 
                     if existing:
@@ -61,7 +61,7 @@ def scrape_feed(tag, rss_url, news_col):
                         description = description_element.text if description_element is not None else ""
                         raw_content, image_url = get_content(guid)
                         content = clean_text(raw_content) if raw_content is not None else ""
-                        scraped_on = datetime.datetime.utcnow()
+                        scraped_on = datetime.datetime.now(datetime.UTC)
 
                         articles.append({
                             "_id": _id,
@@ -76,7 +76,7 @@ def scrape_feed(tag, rss_url, news_col):
                             "scraped_on": scraped_on
                         })
                 else:
-                    pass
+                    pass         
             else:
                 pass
 
