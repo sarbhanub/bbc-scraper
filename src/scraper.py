@@ -38,7 +38,7 @@ def scrape_feed(tag, rss_url, news_col):
 
     for item in tree.findall(".//item"):
         guid = item.find("guid").text
-        pattern =  r'.*/([^/]+)(?=#|$)'
+        pattern =  r'\/([^\/#?]+)(?=[^\/]*$)'
         match = re.search(pattern, guid)
         try:
             if match:
