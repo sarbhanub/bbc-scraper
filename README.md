@@ -1,3 +1,5 @@
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/) [![run scraper](https://github.com/sarbhanub/bbc-scraper/actions/workflows/actions.yml/badge.svg)](https://github.com/sarbhanub/bbc-scraper/actions/workflows/actions.yml)
+
 # BBC Scraper
 
 This repository contains a scraper built with Python and integrated with GitHub Actions to fetch RSS feeds from BBC multiple times a day. The scraper utilizes the power of GitHub Actions to automate the scraping process.
